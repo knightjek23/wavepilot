@@ -68,6 +68,12 @@ function skip(message: string) {
   skipped++;
 }
 
+function fail(message: string) {
+  console.error(`  ✗ ${message}`);
+  failed++;
+  failures.push(message);
+}
+
 async function api(
   path: string,
   method: "GET" | "POST" = "GET",
@@ -602,23 +608,4 @@ async function main() {
   console.log(`  Passed:  ${passed}`);
   console.log(`  Failed:  ${failed}`);
   console.log(`  Skipped: ${skipped}`);
-  console.log(`  Total:   ${passed + failed + skipped}`);
-
-  if (failures.length > 0) {
-    console.log("\n  Failures:");
-    failures.forEach((f) => console.log(`    → ${f}`));
-  }
-
-  if (failed > 0) {
-    console.error(`\n❌ ${failed} test(s) failed. Fix before launch.`);
-    process.exit(1);
-  } else {
-    console.log(`\n✅ All tests passed (${skipped} skipped).`);
-    process.exit(0);
-  }
-}
-
-main().catch((err) => {
-  console.error("Regression test crashed:", err);
-  process.exit(1);
-});
+  conso
