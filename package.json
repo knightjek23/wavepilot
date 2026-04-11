@@ -1,0 +1,42 @@
+{
+  "name": "wavepilot",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint . --ext .ts,.tsx",
+    "lint:fix": "eslint . --ext .ts,.tsx --fix",
+    "format": "prettier --write \"src/**/*.{ts,tsx,css,json}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx,css,json}\"",
+    "type-check": "tsc --noEmit",
+    "smoke-test": "tsx scripts/smoke-test.ts",
+    "regression-test": "tsx scripts/regression-test.ts",
+    "security-audit": "tsx scripts/security-audit.ts"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39",
+    "@sentry/nextjs": "^8",
+    "@clerk/nextjs": "^6",
+    "@react-pdf/renderer": "^4",
+    "@supabase/supabase-js": "^2",
+    "next": "16.2.2",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "stripe": "^17",
+    "svix": "^1"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.2",
+    "prettier": "^3",
+    "tailwindcss": "^4",
+    "tsx": "^4",
+    "typescript": "^5"
+  }
+}

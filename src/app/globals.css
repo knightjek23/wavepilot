@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+:root {
+  --color-primary: #1d9e75;
+  --color-primary-dark: #177a5b;
+  --color-bg: #fafaf9;
+  --color-text: #1a1a1a;
+  --color-text-muted: #6b7280;
+}
+
+body {
+  font-family: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+code,
+pre {
+  font-family: "DM Mono", ui-monospace, monospace;
+}
