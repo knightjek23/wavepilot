@@ -19,9 +19,9 @@ export function UpgradeBanner({ plan, used, limit }: UpgradeBannerProps) {
   if (plan !== "free") return null;
 
   return (
-    <div className="mb-6 flex items-center justify-between rounded-lg bg-[#1D9E75]/5 border border-[#1D9E75]/20 px-4 py-3">
+    <div className="mb-6 flex items-center justify-between rounded-lg bg-[#C84B24]/5 border border-[#C84B24]/20 px-4 py-3">
       <div>
-        <p className="text-sm font-medium text-[#1D9E75]">
+        <p className="text-sm font-medium text-[#C84B24]">
           Free plan: {used}/{limit} plans used this month
         </p>
         <p className="text-xs text-gray-500 mt-0.5">
@@ -31,7 +31,7 @@ export function UpgradeBanner({ plan, used, limit }: UpgradeBannerProps) {
       <button
         type="button"
         onClick={() => router.push("/pricing")}
-        className="rounded-lg bg-[#1D9E75] px-4 py-2 text-xs font-semibold text-white hover:bg-[#177a5b] whitespace-nowrap"
+        className="rounded-lg bg-[#C84B24] px-4 py-2 text-xs font-semibold text-white hover:bg-[#A73C18] whitespace-nowrap"
       >
         Upgrade
       </button>

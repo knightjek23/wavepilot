@@ -1,5 +1,9 @@
 # Wavepilot — Brand & Positioning
-**Version:** 1.0 | **Date:** April 7, 2026
+**Version:** 2.0 | **Date:** April 15, 2026
+
+> **Design system:** For the canonical color, type, and component tokens see
+> [`docs/wavepilot-design-system-v2.md`](./wavepilot-design-system-v2.md).
+> The palette and type references in this file have been updated to match v2.
 
 ---
 
@@ -64,24 +68,28 @@ Runs their own social media with no marketing background. Posts randomly, sees l
 ### Color palette
 | Role | Hex | Usage |
 |---|---|---|
-| Primary | `#1D9E75` | CTAs, active states, accents, logo |
-| Primary light | `#E1F5EE` | Backgrounds, badges, chip fills |
-| Primary deep | `#0F6E56` | Hover states, dark text on teal |
-| Primary dark | `#085041` | Gradient end, deep backgrounds |
-| Amber accent | `#EF9F27` | Secondary CTA (final CTA section), highlights |
-| Off-white | `#F7F6F2` | Page background, card backgrounds |
-| Text | `#2C2C2A` | Primary body copy |
-| Muted | `#888780` | Secondary text, labels |
+| Primary | `#C84B24` | CTAs, active states, accents, logo |
+| Primary hover | `#A73C18` | Hover states on primary elements |
+| Primary deep | `#802E14` | Pressed states, emphasis text on light bg |
+| Primary light | `#FCEEE8` | Subtle background tint for callouts, selected chips |
+| Page background | `#FAFAF9` | Page surface (warm off-white) |
+| Card background | `#FFFFFF` | Card, modal, input surfaces |
+| Text primary | `#1F1F1F` | Headings, body copy |
+| Text muted | `#7A808C` | Secondary copy, sub-hero, helper text |
+| Border default | `#DDDDDD` | Card borders, dividers |
+| Border input | `#E4E5EA` | Input borders |
 
 ### Typography
-- **Display / UI:** Plus Jakarta Sans (400, 500, 600, 700)
-- **Data / code / tags:** DM Mono (400, 500)
-- Avoid: Inter, Roboto, Arial, system-ui
+- **Display:** Red Hat Display (400, 500) — h1–h3, logo wordmark, pricing numbers
+- **Body / UI:** Inter (400, 500, 600) — everything else
+- **Code / mono:** `ui-monospace, SFMono-Regular, Menlo, monospace`
+- Retired: Plus Jakarta Sans, DM Mono
 
 ### Design principles
-- Clean and energetic — not dark, not minimal to the point of sterile
-- Teal dominates — feels fresh, trustworthy, platform-neutral
-- Motion: smooth loaders, subtle transitions, wave animation in logo
+- Warm and editorial — paper-like, not clinical
+- Burnt orange is the only accent — used sparingly for emphasis
+- Borders over shadows — the canvas relies on 1px dividers for structure
+- Motion is restrained — 150–400ms eases, respect reduced-motion preferences
 - Mobile-first — many SMB users access on phone
 - Speed first — skeleton loaders, no blocking UI
 

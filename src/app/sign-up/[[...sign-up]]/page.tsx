@@ -6,7 +6,7 @@ export default function SignUpPage() {
       <SignUp
         appearance={{
           variables: {
-            colorPrimary: "#1D9E75",
+            colorPrimary: "#C84B24",
           },
         }}
         fallbackRedirectUrl="/onboarding"

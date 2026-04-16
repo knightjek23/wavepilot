@@ -2,14 +2,16 @@
  * UsageService — Quota checking + usage logging
  *
  * Reads subscriptions + usage_events to determine if a user
- * can generate another plan this billing period.
+ * can generate another plan (or caption set) this billing period.
  *
- * Plan limits: free = 2/month, creator = 20/month, pro = unlimited.
+ * Plan limits:    free = 2,   creator = 20,  pro = unlimited  per month
+ * Caption limits: free = 5,   creator = 100, pro = unlimited  per month
+ *
  * Billing period is the current calendar month (e.g. "2026-04").
  */
 
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
-import { PLAN_LIMITS, type PlanTier } from "@/types";
+import { PLAN_LIMITS, CAPTION_LIMITS, type PlanTier, type UsageEventType } from "@/types";
 
 export interface QuotaResult {
   allowed: boolean;
@@ -32,11 +34,15 @@ export class UsageService {
   }
 
   /**
-   * Check if a user can generate another plan.
-   * Reads the user's subscription tier, then counts usage events
-   * in the current billing period.
+   * Check if a user can generate another event of the given type.
+   *
+   * @param userId    Clerk user id
+   * @param eventType "plan" (default) | "caption"
    */
-  async checkQuota(userId: string): Promise<QuotaResult> {
+  async checkQuota(
+    userId: string,
+    eventType: UsageEventType = "plan"
+  ): Promise<QuotaResult> {
     const client = this.getClient();
     const billingPeriod = this.getCurrentBillingPeriod();
 
@@ -47,23 +53,32 @@ export class UsageService {
       .eq("user_id", userId)
       .single();
 
-    const plan: PlanTier = (sub?.status === "active" && sub?.plan) ? sub.plan as PlanTier : "free";
-    const limit = PLAN_LIMITS[plan];
+    const plan: PlanTier =
+      sub?.status === "active" && sub?.plan ? (sub.plan as PlanTier) : "free";
 
-    // Pro users have unlimited — skip the count
+    const limit = this.getLimitForType(plan, eventType);
+
+    // Pro users (or any tier with Infinity) have unlimited — skip the count
     if (limit === Infinity) {
       return { allowed: true, used: 0, limit: Infinity, plan };
     }
 
-    // Count usage events this billing period
+    // Count usage events of this type in the current billing period.
+    // Only successful events count against quota — failures shouldn't
+    // burn someone's free tier on a 500 from Claude.
     const { count, error } = await client
       .from("usage_events")
       .select("id", { count: "exact", head: true })
       .eq("user_id", userId)
-      .eq("billing_period", billingPeriod);
+      .eq("billing_period", billingPeriod)
+      .eq("event_type", eventType)
+      .eq("success", true);
 
     if (error) {
-      console.error("UsageService.checkQuota: count query failed", error);
+      console.error(
+        `UsageService.checkQuota(${eventType}): count query failed`,
+        error
+      );
       // Fail open — don't block the user if we can't count
       return { allowed: true, used: 0, limit, plan };
     }
@@ -79,40 +94,74 @@ export class UsageService {
   }
 
   /**
-   * Log a usage event after a plan is generated.
+   * Log a successful plan generation (legacy signature preserved).
    */
   async logUsage(userId: string, planId: string): Promise<void> {
-    const client = this.getClient();
-    const billingPeriod = this.getCurrentBillingPeriod();
-
-    const { error } = await client.from("usage_events").insert({
-      user_id: userId,
-      plan_id: planId,
-      billing_period: billingPeriod,
-    });
-
-    if (error) {
-      console.error("UsageService.logUsage failed", error);
-      // Non-fatal — the plan was already generated and saved
-    }
+    return this.logEvent(userId, "plan", { planId });
   }
 
   /**
-   * Log a failed generation attempt (no plan_id).
-   * Doesn't count toward quota — just for observability.
+   * Log a successful caption generation.
    */
-  async logFailedAttempt(userId: string): Promise<void> {
+  async logCaptionUsage(userId: string, captionSetId: string): Promise<void> {
+    return this.logEvent(userId, "caption", { captionSetId });
+  }
+
+  /**
+   * Log a failed generation attempt.
+   * Doesn't count toward quota — just for observability.
+   *
+   * @param userId
+   * @param eventType defaults to "plan" for back-compat
+   */
+  async logFailedAttempt(
+    userId: string,
+    eventType: UsageEventType = "plan"
+  ): Promise<void> {
     const client = this.getClient();
 
     const { error } = await client.from("usage_events").insert({
       user_id: userId,
       plan_id: null,
+      caption_set_id: null,
+      event_type: eventType,
       billing_period: this.getCurrentBillingPeriod(),
+      success: false, // failures are logged for observability but don't burn quota
     });
 
     if (error) {
-      console.error("UsageService.logFailedAttempt failed", error);
+      console.error(`UsageService.logFailedAttempt(${eventType}) failed`, error);
     }
+  }
+
+  // -----------------------------------------------------------------
+  // Internals
+  // -----------------------------------------------------------------
+
+  private async logEvent(
+    userId: string,
+    eventType: UsageEventType,
+    refs: { planId?: string; captionSetId?: string }
+  ): Promise<void> {
+    const client = this.getClient();
+    const billingPeriod = this.getCurrentBillingPeriod();
+
+    const { error } = await client.from("usage_events").insert({
+      user_id: userId,
+      plan_id: refs.planId ?? null,
+      caption_set_id: refs.captionSetId ?? null,
+      event_type: eventType,
+      billing_period: billingPeriod,
+    });
+
+    if (error) {
+      console.error(`UsageService.logEvent(${eventType}) failed`, error);
+      // Non-fatal — the work was already done and returned to the user
+    }
+  }
+
+  private getLimitForType(plan: PlanTier, eventType: UsageEventType): number {
+    return eventType === "caption" ? CAPTION_LIMITS[plan] : PLAN_LIMITS[plan];
   }
 
   /**

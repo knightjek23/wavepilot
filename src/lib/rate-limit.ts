@@ -16,7 +16,14 @@ interface RateLimitEntry {
 const store = new Map<string, RateLimitEntry>();
 
 const WINDOW_MS = 60 * 60 * 1000; // 1 hour
-const MAX_REQUESTS = 10;
+
+// Per-scope limits. Each scope has its own pool so captions don't
+// eat into the plan-generation budget.
+const SCOPE_LIMITS: Record<string, number> = {
+  plan: 10,      // 10 plan generations / hour
+  caption: 20,   // 20 caption batches / hour (each batch is N captions)
+};
+const DEFAULT_LIMIT = 10;
 
 export interface RateLimitResult {
   allowed: boolean;
@@ -24,20 +31,28 @@ export interface RateLimitResult {
   retryAfterSeconds: number | null;
 }
 
-export function checkRateLimit(userId: string): RateLimitResult {
+/**
+ * Check the sliding-window rate limit for a user in a given scope.
+ *
+ * @param userId  Clerk user id
+ * @param scope   "plan" | "caption" — defaults to "plan" for back-compat
+ */
+export function checkRateLimit(userId: string, scope: string = "plan"): RateLimitResult {
   const now = Date.now();
   const windowStart = now - WINDOW_MS;
+  const limit = SCOPE_LIMITS[scope] ?? DEFAULT_LIMIT;
+  const key = `${scope}:${userId}`;
 
-  let entry = store.get(userId);
+  let entry = store.get(key);
   if (!entry) {
     entry = { timestamps: [] };
-    store.set(userId, entry);
+    store.set(key, entry);
   }
 
   // Prune timestamps outside the window
   entry.timestamps = entry.timestamps.filter((t) => t > windowStart);
 
-  if (entry.timestamps.length >= MAX_REQUESTS) {
+  if (entry.timestamps.length >= limit) {
     // Oldest timestamp in window — retry after it falls out
     const oldestInWindow = entry.timestamps[0];
     const retryAfterMs = oldestInWindow + WINDOW_MS - now;
@@ -53,7 +68,7 @@ export function checkRateLimit(userId: string): RateLimitResult {
   entry.timestamps.push(now);
   return {
     allowed: true,
-    remaining: MAX_REQUESTS - entry.timestamps.length,
+    remaining: limit - entry.timestamps.length,
     retryAfterSeconds: null,
   };
 }

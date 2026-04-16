@@ -56,10 +56,10 @@ export default function HistoryPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#fafaf9]">
+    <main className="min-h-screen bg-[#FAFAF9]">
       <header className="border-b border-gray-200 bg-white px-6 py-4">
         <div className="mx-auto flex max-w-5xl items-center justify-between">
-          <h1 className="text-xl font-bold" style={{ color: "#1D9E75" }}>
+          <h1 className="text-xl font-bold" style={{ color: "#C84B24" }}>
             Wavepilot
           </h1>
           <a href="/dashboard" className="text-sm text-gray-500 hover:text-gray-700">
@@ -79,7 +79,7 @@ export default function HistoryPage() {
             <p className="text-gray-500 mb-4">No plans yet. Generate your first one!</p>
             <a
               href="/dashboard"
-              className="inline-block rounded-lg bg-[#1D9E75] px-4 py-2 text-sm font-semibold text-white hover:bg-[#177a5b]"
+              className="inline-block rounded-lg bg-[#C84B24] px-4 py-2 text-sm font-semibold text-white hover:bg-[#A73C18]"
             >
               Generate a plan
             </a>
@@ -93,11 +93,11 @@ export default function HistoryPage() {
                 key={plan.id}
                 type="button"
                 onClick={() => setSelectedPlan(plan)}
-                className="w-full rounded-xl border border-gray-200 bg-white p-4 text-left hover:border-[#1D9E75]/30 transition-all"
+                className="w-full rounded-xl border border-gray-200 bg-white p-4 text-left hover:border-[#C84B24]/30 transition-all"
               >
                 <div className="flex items-center justify-between">
                   <div>
-                    <span className="rounded-full bg-[#1D9E75]/10 text-[#1D9E75] px-2.5 py-0.5 text-xs font-medium">
+                    <span className="rounded-full bg-[#C84B24]/10 text-[#C84B24] px-2.5 py-0.5 text-xs font-medium">
                       {outputLabel(plan.output_type)}
                     </span>
                     <span className="ml-2 text-sm font-medium text-gray-900">{plan.niche}</span>
@@ -131,7 +131,7 @@ export default function HistoryPage() {
             </button>
 
             <div className="flex items-center gap-2 mb-4">
-              <span className="rounded-full bg-[#1D9E75]/10 text-[#1D9E75] px-2.5 py-0.5 text-xs font-medium">
+              <span className="rounded-full bg-[#C84B24]/10 text-[#C84B24] px-2.5 py-0.5 text-xs font-medium">
                 {outputLabel(selectedPlan.output_type)}
               </span>
               <span className="text-sm text-gray-600">{selectedPlan.niche}</span>

@@ -1,0 +1,102 @@
+{
+  "$schema": "https://tr.designtokens.org/format/",
+  "$description": "Wavepilot design tokens v2 — burnt orange + editorial neutrals",
+  "$version": "2.0.0",
+
+  "color": {
+    "primary": {
+      "base":   { "$value": "#C84B24", "$type": "color" },
+      "hover":  { "$value": "#A73C18", "$type": "color" },
+      "deep":   { "$value": "#802E14", "$type": "color" },
+      "light":  { "$value": "#FCEEE8", "$type": "color" },
+      "5":      { "$value": "rgba(200, 75, 36, 0.05)", "$type": "color" },
+      "10":     { "$value": "rgba(200, 75, 36, 0.10)", "$type": "color" },
+      "20":     { "$value": "rgba(200, 75, 36, 0.20)", "$type": "color" }
+    },
+    "bg": {
+      "page":   { "$value": "#FAFAF9", "$type": "color" },
+      "card":   { "$value": "#FFFFFF", "$type": "color" },
+      "subtle": { "$value": "#F4F3F1", "$type": "color" }
+    },
+    "text": {
+      "primary": { "$value": "#1F1F1F", "$type": "color" },
+      "body":    { "$value": "#000000", "$type": "color" },
+      "muted":   { "$value": "#7A808C", "$type": "color" },
+      "mute-2":  { "$value": "#9196A0", "$type": "color" },
+      "mute-3":  { "$value": "#7D7D7D", "$type": "color" }
+    },
+    "border": {
+      "default": { "$value": "#DDDDDD", "$type": "color" },
+      "input":   { "$value": "#E4E5EA", "$type": "color" },
+      "focus":   { "$value": "#C84B24", "$type": "color" }
+    },
+    "status": {
+      "success": { "$value": "#1F7A4C", "$type": "color" },
+      "warning": { "$value": "#B8791E", "$type": "color" },
+      "danger":  { "$value": "#B23A2A", "$type": "color" },
+      "info":    { "$value": "#3A5C8B", "$type": "color" }
+    }
+  },
+
+  "font": {
+    "family": {
+      "display": { "$value": "\"Red Hat Display\", ui-serif, Georgia, serif", "$type": "fontFamily" },
+      "body":    { "$value": "\"Inter\", ui-sans-serif, system-ui, sans-serif", "$type": "fontFamily" },
+      "mono":    { "$value": "ui-monospace, SFMono-Regular, Menlo, monospace", "$type": "fontFamily" }
+    },
+    "weight": {
+      "regular":  { "$value": 400, "$type": "fontWeight" },
+      "medium":   { "$value": 500, "$type": "fontWeight" },
+      "semibold": { "$value": 600, "$type": "fontWeight" }
+    },
+    "size": {
+      "display-xl": { "$value": "60px", "$type": "dimension" },
+      "display-lg": { "$value": "44px", "$type": "dimension" },
+      "display-md": { "$value": "32px", "$type": "dimension" },
+      "display-sm": { "$value": "24px", "$type": "dimension" },
+      "body-lg":    { "$value": "22px", "$type": "dimension" },
+      "body":       { "$value": "16px", "$type": "dimension" },
+      "body-sm":    { "$value": "14px", "$type": "dimension" },
+      "label":      { "$value": "13px", "$type": "dimension" },
+      "caption":    { "$value": "12px", "$type": "dimension" }
+    },
+    "lineHeight": {
+      "display-xl": { "$value": "72px", "$type": "dimension" },
+      "display-lg": { "$value": "52px", "$type": "dimension" },
+      "display-md": { "$value": "40px", "$type": "dimension" },
+      "display-sm": { "$value": "32px", "$type": "dimension" },
+      "body-lg":    { "$value": "32px", "$type": "dimension" },
+      "body":       { "$value": "24px", "$type": "dimension" },
+      "body-sm":    { "$value": "20px", "$type": "dimension" },
+      "label":      { "$value": "16px", "$type": "dimension" },
+      "caption":    { "$value": "16px", "$type": "dimension" }
+    }
+  },
+
+  "spacing": {
+    "1":  { "$value": "4px",   "$type": "dimension" },
+    "2":  { "$value": "8px",   "$type": "dimension" },
+    "3":  { "$value": "12px",  "$type": "dimension" },
+    "4":  { "$value": "16px",  "$type": "dimension" },
+    "6":  { "$value": "24px",  "$type": "dimension" },
+    "8":  { "$value": "32px",  "$type": "dimension" },
+    "12": { "$value": "48px",  "$type": "dimension" },
+    "16": { "$value": "64px",  "$type": "dimension" },
+    "24": { "$value": "96px",  "$type": "dimension" },
+    "32": { "$value": "128px", "$type": "dimension" }
+  },
+
+  "radius": {
+    "sm":   { "$value": "4px",    "$type": "dimension" },
+    "md":   { "$value": "6px",    "$type": "dimension" },
+    "lg":   { "$value": "12px",   "$type": "dimension" },
+    "xl":   { "$value": "16px",   "$type": "dimension" },
+    "pill": { "$value": "9999px", "$type": "dimension" }
+  },
+
+  "shadow": {
+    "sm": { "$value": "0 1px 2px rgba(17, 17, 17, 0.04)",   "$type": "shadow" },
+    "md": { "$value": "0 4px 12px rgba(17, 17, 17, 0.06)",  "$type": "shadow" },
+    "lg": { "$value": "0 12px 32px rgba(17, 17, 17, 0.08)", "$type": "shadow" }
+  }
+}

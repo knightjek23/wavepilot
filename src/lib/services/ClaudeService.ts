@@ -13,10 +13,43 @@
  */
 
 import Anthropic from "@anthropic-ai/sdk";
-import type { OutputType, TrendItem, UserProfile } from "@/types";
+import type {
+  OutputType,
+  TrendItem,
+  UserProfile,
+  CaptionItem,
+  CaptionVibe,
+  Platform,
+} from "@/types";
 
 const MODEL = "claude-sonnet-4-20250514";
 const MAX_TOKENS = 4096;
+
+// Platform-specific caption guidance — keeps output platform-appropriate
+const PLATFORM_GUIDANCE: Record<Platform, string> = {
+  tiktok:
+    "TikTok: hooks under 8 words, captions 1-2 sentences, 3-5 hashtags mixing niche + trending.",
+  instagram:
+    "Instagram: hooks are the first line before 'more', captions 2-4 sentences with a CTA, 5-10 hashtags.",
+  youtube:
+    "YouTube Shorts: hooks that promise value in the first 3 seconds, captions 1-3 sentences, 3-5 hashtags.",
+  reddit:
+    "Reddit: hooks work as post titles (avoid clickbait, be specific), captions are posts 2-4 sentences, no hashtags (use subreddit context in caption).",
+  twitter:
+    "Twitter/X: hooks ARE the post (280 char limit), captions must fit with any hashtags inline, 1-3 hashtags max.",
+  linkedin:
+    "LinkedIn: hooks that hint at a business insight, captions 3-5 sentences with line breaks for scannability, 3-5 professional hashtags.",
+  facebook:
+    "Facebook: hooks are conversational, captions 2-4 sentences that invite discussion, 2-4 hashtags.",
+};
+
+const VIBE_GUIDANCE: Record<CaptionVibe, string> = {
+  educational: "Informative. Teach something in each hook. Lead with a specific insight, not a generic claim.",
+  funny: "Playful and self-aware. Relatable humor over jokes. Avoid forced puns.",
+  bold: "Strong point of view. Take a stance. Challenge a common belief in the niche.",
+  story: "Narrative. Start in media res or with a turning point. Curiosity gap in the hook.",
+  hype: "High energy. Launch-style. Urgency and exclusivity without being salesy.",
+};
 
 export class ClaudeService {
   private client: Anthropic;
@@ -75,6 +108,148 @@ export class ClaudeService {
     const promptTokens = response.usage?.input_tokens ?? 0;
 
     return { content, promptTokens };
+  }
+
+  /**
+   * Generate N captions + hooks for a topic.
+   * Returns structured CaptionItem[] — not markdown — so the UI can
+   * render individual cards with per-card copy buttons.
+   *
+   * Uses JSON mode via instruction (Anthropic doesn't have a dedicated
+   * JSON response_format like OpenAI, so we parse strictly and throw
+   * on malformed output — caller should retry once on parse failure).
+   */
+  async generateCaptions(
+    topic: string,
+    platform: Platform,
+    vibe: CaptionVibe,
+    count: number
+  ): Promise<{ items: CaptionItem[]; promptTokens: number }> {
+    const system = this.getCaptionSystemPrompt(platform, vibe, count);
+    const user = this.getCaptionUserPrompt(topic, platform, vibe, count);
+
+    const response = await this.client.messages.create({
+      model: MODEL,
+      max_tokens: MAX_TOKENS,
+      system,
+      messages: [{ role: "user", content: user }],
+    });
+
+    const rawText = this.parseResponse(response);
+    const items = this.parseCaptionJson(rawText, count);
+    const promptTokens = response.usage?.input_tokens ?? 0;
+
+    return { items, promptTokens };
+  }
+
+  private getCaptionSystemPrompt(
+    platform: Platform,
+    vibe: CaptionVibe,
+    count: number
+  ): string {
+    return `You are Wavepilot's caption generator. You write scroll-stopping hooks and full captions for solo creators and small businesses.
+
+Your tone is direct, specific, and actionable — no marketing jargon, no generic platitudes, no emoji spam.
+
+PLATFORM: ${platform}
+${PLATFORM_GUIDANCE[platform]}
+
+VIBE: ${vibe}
+${VIBE_GUIDANCE[vibe]}
+
+Generate exactly ${count} caption options. Each must have:
+- "hook": the first line that stops the scroll. Must be specific to the topic. No "Let me tell you why...", no "POV:", no generic framings.
+- "caption": the full caption body (without the hook, without hashtags). Platform-appropriate length.
+- "hashtags": array of platform-appropriate hashtags as strings WITHOUT the # symbol. Empty array if platform doesn't use hashtags.
+
+Each of the ${count} options should offer a meaningfully different angle on the topic — don't just reword the same idea.
+
+CRITICAL: Respond with ONLY a valid JSON object in this exact shape, no prose, no code fences, no commentary:
+{
+  "items": [
+    { "hook": "...", "caption": "...", "hashtags": ["...", "..."] }
+  ]
+}`;
+  }
+
+  private getCaptionUserPrompt(
+    topic: string,
+    platform: Platform,
+    vibe: CaptionVibe,
+    count: number
+  ): string {
+    return `Topic: ${topic}
+Platform: ${platform}
+Vibe: ${vibe}
+Count: ${count}
+
+Generate ${count} ${vibe} hook + caption combos for ${platform} about this topic. Respond with JSON only.`;
+  }
+
+  /**
+   * Parse the JSON response. Claude sometimes wraps JSON in ```json ... ```
+   * or adds a preamble — strip that defensively.
+   */
+  private parseCaptionJson(raw: string, expectedCount: number): CaptionItem[] {
+    // Strip common wrappers
+    let cleaned = raw.trim();
+    cleaned = cleaned.replace(/^```(?:json)?\s*/i, "").replace(/```\s*$/, "");
+
+    // Find first { and last } — defensive against leading/trailing prose
+    const firstBrace = cleaned.indexOf("{");
+    const lastBrace = cleaned.lastIndexOf("}");
+    if (firstBrace === -1 || lastBrace === -1) {
+      throw new Error("Caption response did not contain JSON");
+    }
+    cleaned = cleaned.slice(firstBrace, lastBrace + 1);
+
+    let parsed: unknown;
+    try {
+      parsed = JSON.parse(cleaned);
+    } catch (err) {
+      throw new Error(`Caption JSON parse failed: ${err instanceof Error ? err.message : String(err)}`);
+    }
+
+    if (
+      typeof parsed !== "object" ||
+      parsed === null ||
+      !("items" in parsed) ||
+      !Array.isArray((parsed as { items: unknown }).items)
+    ) {
+      throw new Error("Caption response missing items array");
+    }
+
+    const items = (parsed as { items: unknown[] }).items;
+
+    const validated: CaptionItem[] = items.map((item, idx) => {
+      if (
+        typeof item !== "object" ||
+        item === null ||
+        typeof (item as { hook?: unknown }).hook !== "string" ||
+        typeof (item as { caption?: unknown }).caption !== "string" ||
+        !Array.isArray((item as { hashtags?: unknown }).hashtags)
+      ) {
+        throw new Error(`Caption item ${idx} has invalid shape`);
+      }
+      const hashtags = (item as { hashtags: unknown[] }).hashtags
+        .filter((h): h is string => typeof h === "string")
+        .map((h) => h.replace(/^#+/, "").trim())
+        .filter((h) => h.length > 0);
+
+      return {
+        hook: (item as { hook: string }).hook.trim(),
+        caption: (item as { caption: string }).caption.trim(),
+        hashtags,
+      };
+    });
+
+    if (validated.length === 0) {
+      throw new Error("Caption response contained no valid items");
+    }
+
+    // If Claude returned fewer than requested, accept it — better than failing
+    // the whole request. Slice if it returned more.
+    return validated.slice(0, expectedCount);
   }
 
   /**

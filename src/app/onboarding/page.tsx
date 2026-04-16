@@ -77,7 +77,7 @@ export default function OnboardingPage() {
             <div
               key={s}
               className={`h-2 rounded-full transition-all ${
-                s === step ? "w-10 bg-[#1D9E75]" : s < step ? "w-10 bg-[#1D9E75]/40" : "w-10 bg-gray-200"
+                s === step ? "w-10 bg-[#C84B24]" : s < step ? "w-10 bg-[#C84B24]/40" : "w-10 bg-gray-200"
               }`}
             />
           ))}
@@ -94,7 +94,7 @@ export default function OnboardingPage() {
             <select
               value={niche}
               onChange={(e) => setNiche(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-[#1D9E75] mb-3"
+              className="w-full border border-gray-300 rounded-lg px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-[#C84B24] mb-3"
             >
               <option value="">Select a niche...</option>
               {NICHE_OPTIONS.map((n) => (
@@ -111,7 +111,7 @@ export default function OnboardingPage() {
                 placeholder="e.g. Vintage watches, Dog training, Vegan baking..."
                 value={customNiche}
                 onChange={(e) => setCustomNiche(e.target.value)}
-                className="w-full border border-gray-300 rounded-lg px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-[#1D9E75]"
+                className="w-full border border-gray-300 rounded-lg px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-[#C84B24]"
                 maxLength={100}
                 autoFocus
               />
@@ -135,7 +135,7 @@ export default function OnboardingPage() {
                   onClick={() => togglePlatform(p.value)}
                   className={`flex items-center gap-3 rounded-lg border-2 px-4 py-3 text-left transition-all ${
                     platforms.includes(p.value)
-                      ? "border-[#1D9E75] bg-[#1D9E75]/5"
+                      ? "border-[#C84B24] bg-[#C84B24]/5"
                       : "border-gray-200 hover:border-gray-300"
                   }`}
                 >
@@ -166,7 +166,7 @@ export default function OnboardingPage() {
                   onClick={() => setPostingGoal(g.value)}
                   className={`rounded-lg border-2 px-4 py-3 text-sm font-medium transition-all ${
                     postingGoal === g.value
-                      ? "border-[#1D9E75] bg-[#1D9E75]/5"
+                      ? "border-[#C84B24] bg-[#C84B24]/5"
                       : "border-gray-200 hover:border-gray-300"
                   }`}
                 >
@@ -186,7 +186,7 @@ export default function OnboardingPage() {
                   onClick={() => setOutputType(o.value)}
                   className={`rounded-lg border-2 px-4 py-4 text-left transition-all ${
                     outputType === o.value
-                      ? "border-[#1D9E75] bg-[#1D9E75]/5"
+                      ? "border-[#C84B24] bg-[#C84B24]/5"
                       : "border-gray-200 hover:border-gray-300"
                   }`}
                 >
@@ -222,7 +222,7 @@ export default function OnboardingPage() {
               type="button"
               onClick={() => setStep((s) => (s + 1) as Step)}
               disabled={!canAdvance()}
-              className="rounded-lg bg-[#1D9E75] px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-[#177a5b] disabled:opacity-40 disabled:cursor-not-allowed"
+              className="rounded-lg bg-[#C84B24] px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-[#A73C18] disabled:opacity-40 disabled:cursor-not-allowed"
             >
               Continue
             </button>
@@ -231,7 +231,7 @@ export default function OnboardingPage() {
               type="button"
               onClick={handleSubmit}
               disabled={!canAdvance() || saving}
-              className="rounded-lg bg-[#1D9E75] px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-[#177a5b] disabled:opacity-40 disabled:cursor-not-allowed"
+              className="rounded-lg bg-[#C84B24] px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-[#A73C18] disabled:opacity-40 disabled:cursor-not-allowed"
             >
               {saving ? "Saving..." : "Generate my plan \u2192"}
             </button>

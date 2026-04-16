@@ -40,7 +40,7 @@ export function QuotaModal({ used, limit, plan, onClose }: QuotaModalProps) {
           </div>
           <div className="h-2 rounded-full bg-gray-100 overflow-hidden">
             <div
-              className="h-full rounded-full bg-[#1D9E75] transition-all"
+              className="h-full rounded-full bg-[#C84B24] transition-all"
               style={{ width: `${Math.min((used / (limit === Infinity ? 1 : limit)) * 100, 100)}%` }}
             />
           </div>
@@ -59,7 +59,7 @@ export function QuotaModal({ used, limit, plan, onClose }: QuotaModalProps) {
           <button
             type="button"
             onClick={() => router.push("/pricing")}
-            className="flex-1 rounded-lg bg-[#1D9E75] py-2.5 text-sm font-semibold text-white hover:bg-[#177a5b]"
+            className="flex-1 rounded-lg bg-[#C84B24] py-2.5 text-sm font-semibold text-white hover:bg-[#A73C18]"
           >
             Upgrade to {nextPlan}
           </button>

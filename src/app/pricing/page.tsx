@@ -88,10 +88,10 @@ export default function PricingPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#fafaf9]">
+    <main className="min-h-screen bg-[#FAFAF9]">
       <header className="border-b border-gray-200 bg-white px-6 py-4">
         <div className="mx-auto flex max-w-5xl items-center justify-between">
-          <h1 className="text-xl font-bold" style={{ color: "#1D9E75" }}>
+          <h1 className="text-xl font-bold" style={{ color: "#C84B24" }}>
             Wavepilot
           </h1>
           <a href="/dashboard" className="text-sm text-gray-500 hover:text-gray-700">
@@ -118,12 +118,12 @@ export default function PricingPage() {
               key={tier.name}
               className={`rounded-xl border-2 bg-white p-6 flex flex-col ${
                 tier.highlighted
-                  ? "border-[#1D9E75] shadow-lg scale-[1.02]"
+                  ? "border-[#C84B24] shadow-lg scale-[1.02]"
                   : "border-gray-200"
               }`}
             >
               {tier.highlighted && (
-                <span className="mb-3 inline-block self-start rounded-full bg-[#1D9E75] px-3 py-0.5 text-xs font-semibold text-white">
+                <span className="mb-3 inline-block self-start rounded-full bg-[#C84B24] px-3 py-0.5 text-xs font-semibold text-white">
                   Most Popular
                 </span>
               )}
@@ -137,7 +137,7 @@ export default function PricingPage() {
               <ul className="mt-6 space-y-2 flex-1">
                 {tier.features.map((f) => (
                   <li key={f} className="flex items-start gap-2 text-sm text-gray-700">
-                    <span className="text-[#1D9E75] mt-0.5">&#10003;</span>
+                    <span className="text-[#C84B24] mt-0.5">&#10003;</span>
                     {f}
                   </li>
                 ))}
@@ -155,10 +155,10 @@ export default function PricingPage() {
                 disabled={tier.plan === "free" || loading === tier.plan}
                 className={`mt-6 w-full rounded-lg py-2.5 text-sm font-semibold transition-all ${
                   tier.highlighted
-                    ? "bg-[#1D9E75] text-white hover:bg-[#177a5b]"
+                    ? "bg-[#C84B24] text-white hover:bg-[#A73C18]"
                     : tier.plan === "free"
                       ? "bg-gray-100 text-gray-400 cursor-default"
-                      : "border border-[#1D9E75] text-[#1D9E75] hover:bg-[#1D9E75]/5"
+                      : "border border-[#C84B24] text-[#C84B24] hover:bg-[#C84B24]/5"
                 } disabled:opacity-50`}
               >
                 {loading === tier.plan ? "Redirecting..." : tier.cta}

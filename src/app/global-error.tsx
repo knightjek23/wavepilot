@@ -35,7 +35,7 @@ export default function GlobalError({
             fontFamily: "system-ui, sans-serif",
           }}
         >
-          <h1 style={{ color: "#1D9E75", fontSize: "1.5rem", fontWeight: 700 }}>
+          <h1 style={{ color: "#C84B24", fontSize: "1.5rem", fontWeight: 700 }}>
             Something went wrong
           </h1>
           <p style={{ color: "#6b7280", marginTop: "0.5rem", fontSize: "0.875rem" }}>
@@ -47,7 +47,7 @@ export default function GlobalError({
             style={{
               marginTop: "1.5rem",
               padding: "0.75rem 1.5rem",
-              backgroundColor: "#1D9E75",
+              backgroundColor: "#C84B24",
               color: "white",
               border: "none",
               borderRadius: "0.5rem",

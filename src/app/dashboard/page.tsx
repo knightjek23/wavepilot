@@ -74,14 +74,17 @@ export default function DashboardPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#fafaf9]">
+    <main className="min-h-screen bg-[#FAFAF9]">
       {/* Header */}
       <header className="border-b border-gray-200 bg-white px-6 py-4">
         <div className="mx-auto flex max-w-5xl items-center justify-between">
-          <h1 className="text-xl font-bold" style={{ color: "#1D9E75" }}>
+          <h1 className="text-xl font-bold" style={{ color: "#C84B24" }}>
             Wavepilot
           </h1>
           <div className="flex items-center gap-4">
+            <a href="/captions" className="text-sm text-gray-500 hover:text-gray-700">
+              Captions
+            </a>
             <a href="/history" className="text-sm text-gray-500 hover:text-gray-700">
               Plan History
             </a>
@@ -105,7 +108,7 @@ export default function DashboardPage() {
                 <select
                   value={niche}
                   onChange={(e) => setNiche(e.target.value)}
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#1D9E75]"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#C84B24]"
                 >
                   <option value="">Select...</option>
                   {NICHE_OPTIONS.map((n) => (
@@ -120,7 +123,7 @@ export default function DashboardPage() {
                 <select
                   value={postingGoal}
                   onChange={(e) => setPostingGoal(e.target.value as PostingGoal)}
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#1D9E75]"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#C84B24]"
                 >
                   <option value="">Select...</option>
                   {POSTING_GOAL_OPTIONS.map((g) => (
@@ -141,7 +144,7 @@ export default function DashboardPage() {
                     onClick={() => togglePlatform(p.value)}
                     className={`flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm transition-all ${
                       platforms.includes(p.value)
-                        ? "border-[#1D9E75] bg-[#1D9E75]/5 text-[#1D9E75]"
+                        ? "border-[#C84B24] bg-[#C84B24]/5 text-[#C84B24]"
                         : "border-gray-200 text-gray-600 hover:border-gray-300"
                     }`}
                   >
@@ -163,7 +166,7 @@ export default function DashboardPage() {
                     onClick={() => setOutputType(o.value)}
                     className={`rounded-lg border-2 px-3 py-3 text-left text-sm transition-all ${
                       outputType === o.value
-                        ? "border-[#1D9E75] bg-[#1D9E75]/5"
+                        ? "border-[#C84B24] bg-[#C84B24]/5"
                         : "border-gray-200 hover:border-gray-300"
                     }`}
                   >
@@ -180,11 +183,31 @@ export default function DashboardPage() {
               type="button"
               onClick={handleGenerate}
               disabled={generating}
-              className="mt-6 w-full rounded-lg bg-[#1D9E75] py-3 text-sm font-semibold text-white transition-all hover:bg-[#177a5b] disabled:opacity-50"
+              className="mt-6 w-full rounded-lg bg-[#C84B24] py-3 text-sm font-semibold text-white transition-all hover:bg-[#A73C18] disabled:opacity-50"
             >
               {generating ? "Generating your plan..." : "Generate my plan \u2192"}
             </button>
           </div>
+        )}
+
+        {/* Quick-access CTA: captions generator */}
+        {!plan && (
+          <a
+            href="/captions"
+            className="mt-4 flex items-center justify-between rounded-xl border border-gray-200 bg-white px-5 py-4 transition-all hover:border-[#C84B24] hover:bg-[#C84B24]/5"
+          >
+            <div>
+              <p className="text-sm font-semibold text-gray-900">
+                Need captions fast?
+              </p>
+              <p className="mt-0.5 text-xs text-gray-500">
+                Drop a topic &mdash; get platform-tuned hooks + captions in seconds.
+              </p>
+            </div>
+            <span className="text-sm font-medium text-[#C84B24]">
+              Open generator &rarr;
+            </span>
+          </a>
         )}
 
         {/* Plan output */}
@@ -192,7 +215,7 @@ export default function DashboardPage() {
           <div>
             {/* Summary chips */}
             <div className="flex flex-wrap items-center gap-2 mb-4">
-              <span className="rounded-full bg-[#1D9E75]/10 text-[#1D9E75] px-3 py-1 text-xs font-medium">
+              <span className="rounded-full bg-[#C84B24]/10 text-[#C84B24] px-3 py-1 text-xs font-medium">
                 {plan.outputType === "calendar" ? "Weekly Calendar" : plan.outputType === "trends" ? "Trend Report" : "Growth Strategy"}
               </span>
               {Object.entries(plan.trendSources).map(([platform, status]) => (
@@ -226,7 +249,7 @@ export default function DashboardPage() {
                 type="button"
                 onClick={handleGenerate}
                 disabled={generating}
-                className="rounded-lg border border-[#1D9E75] px-4 py-2 text-sm font-medium text-[#1D9E75] hover:bg-[#1D9E75]/5"
+                className="rounded-lg border border-[#C84B24] px-4 py-2 text-sm font-medium text-[#C84B24] hover:bg-[#C84B24]/5"
               >
                 {generating ? "Regenerating..." : "Regenerate"}
               </button>
@@ -273,7 +296,7 @@ export default function DashboardPage() {
                   value={adjustPrompt}
                   onChange={(e) => setAdjustPrompt(e.target.value)}
                   placeholder='e.g. "Make it more educational" or "Focus more on Reels"'
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#1D9E75]"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#C84B24]"
                 />
                 <p className="mt-2 text-xs text-gray-400">
                   Adjust functionality coming in a future update. For now, regenerate with different settings above.

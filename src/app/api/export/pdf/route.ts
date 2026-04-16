@@ -20,17 +20,17 @@ const styles = StyleSheet.create({
     padding: 40,
     fontSize: 11,
     fontFamily: "Helvetica",
-    color: "#1a1a1a",
+    color: "#1F1F1F",
   },
   header: {
     marginBottom: 20,
-    borderBottom: "2 solid #1D9E75",
+    borderBottom: "2 solid #C84B24",
     paddingBottom: 10,
   },
   title: {
     fontSize: 22,
     fontWeight: "bold",
-    color: "#1D9E75",
+    color: "#C84B24",
   },
   subtitle: {
     fontSize: 10,
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 6,
     marginTop: 10,
-    color: "#1D9E75",
+    color: "#C84B24",
   },
   subheading: {
     fontSize: 12,

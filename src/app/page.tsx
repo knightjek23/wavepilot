@@ -3,10 +3,10 @@
 /**
  * Landing page — wavepilot.co
  *
- * Waitlist-gated launch page with email capture.
- * Design matches the brand: teal #1D9E75, Plus Jakarta Sans, clean and modern.
+ * Design System v2 — burnt orange + editorial neutrals.
+ * Tokens in docs/wavepilot-design-system-v2.md.
  *
- * Sprint 4, Ticket #25
+ * Waitlist-gated launch page with email capture.
  */
 
 import { useState, type FormEvent } from "react";
@@ -50,130 +50,129 @@ export default function LandingPage() {
   }
 
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen bg-[#FAFAF9] text-[#1F1F1F]">
       {/* Nav */}
-      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-gray-100 bg-white/90 backdrop-blur-md">
-        <div className="mx-auto flex h-[60px] max-w-5xl items-center justify-between px-6">
-          <a href="/" className="flex items-center gap-2 text-lg font-bold text-gray-900">
+      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-[#DDDDDD] bg-[#FAFAF9]/90 backdrop-blur-md">
+        <div className="mx-auto flex h-[64px] max-w-6xl items-center justify-between px-6">
+          <a href="/" className="flex items-center gap-2 text-[24px] font-medium text-black" style={{ fontFamily: "var(--font-display)" }}>
             <span
-              className="flex h-7 w-7 items-center justify-center rounded-lg text-white text-xs font-bold"
-              style={{ backgroundColor: "#1D9E75" }}
+              className="flex h-7 w-7 items-center justify-center rounded-[6px] text-white text-[13px] font-semibold"
+              style={{ backgroundColor: "#C84B24", fontFamily: "var(--font-body)" }}
             >
               W
             </span>
             Wavepilot
           </a>
-          <div className="flex items-center gap-6">
-            <a href="#how-it-works" className="hidden text-sm font-medium text-gray-500 hover:text-gray-800 sm:block">
+          <div className="flex items-center gap-8">
+            <a href="#how-it-works" className="hidden text-[15px] font-medium text-black hover:text-[#C84B24] transition-colors sm:block">
               How it works
             </a>
-            <a href="#pricing" className="hidden text-sm font-medium text-gray-500 hover:text-gray-800 sm:block">
+            <a href="#pricing" className="hidden text-[15px] font-medium text-black hover:text-[#C84B24] transition-colors sm:block">
               Pricing
             </a>
             <a
               href="/sign-in"
-              className="rounded-lg px-4 py-2 text-sm font-semibold text-white transition-colors"
-              style={{ backgroundColor: "#1D9E75" }}
+              className="rounded-[6px] px-5 py-2.5 text-[14px] font-medium text-white transition-colors hover:bg-[#A73C18]"
+              style={{ backgroundColor: "#C84B24" }}
             >
-              Sign In
+              Sign in
             </a>
           </div>
         </div>
       </nav>
 
       {/* Hero */}
-      <section className="relative overflow-hidden pb-16 pt-32 sm:pt-40">
-        {/* Background gradient */}
+      <section className="relative overflow-hidden pb-20 pt-36 sm:pt-44">
+        {/* Soft editorial wash — no harsh gradient */}
         <div
           className="pointer-events-none absolute inset-0"
           style={{
-            background: "radial-gradient(ellipse 80% 60% at 50% -10%, #E1F5EE 0%, transparent 70%)",
-          }}
-        />
-        {/* Grid lines */}
-        <div
-          className="pointer-events-none absolute inset-0"
-          style={{
-            backgroundImage:
-              "linear-gradient(rgba(30,30,28,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(30,30,28,0.06) 1px, transparent 1px)",
-            backgroundSize: "60px 60px",
-            maskImage: "radial-gradient(ellipse 80% 70% at 50% 0%, black 30%, transparent 100%)",
-            WebkitMaskImage: "radial-gradient(ellipse 80% 70% at 50% 0%, black 30%, transparent 100%)",
+            background:
+              "radial-gradient(ellipse 70% 50% at 50% -5%, rgba(200, 75, 36, 0.06) 0%, transparent 70%)",
           }}
         />
 
-        <div className="relative z-10 mx-auto max-w-3xl px-6 text-center">
-          {/* Badge */}
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#1D9E75]/20 bg-[#E1F5EE] px-3 py-1.5">
-            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#1D9E75]" />
-            <span className="text-xs font-semibold tracking-wide text-[#0F6E56]" style={{ fontFamily: "monospace" }}>
-              EARLY ACCESS — JOIN THE WAITLIST
+        <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
+          {/* Eyebrow */}
+          <div className="mb-8 inline-flex items-center gap-2 border-b border-[#C84B24] px-1 pb-1">
+            <span
+              className="text-[12px] font-medium uppercase tracking-[0.08em] text-[#C84B24]"
+              style={{ fontFamily: "var(--font-body)" }}
+            >
+              Early Access — Join the Waitlist
             </span>
           </div>
 
           <h1
-            className="text-4xl font-bold leading-tight tracking-tight text-gray-900 sm:text-5xl md:text-6xl"
-            style={{ letterSpacing: "-0.02em" }}
+            className="mx-auto max-w-3xl text-[40px] font-medium leading-[1.1] text-[#1F1F1F] sm:text-[52px] md:text-[60px] md:leading-[1.08]"
+            style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.01em" }}
           >
             Know what to post{" "}
-            <span className="relative" style={{ color: "#1D9E75" }}>
-              before everyone else
-              <span
-                className="absolute bottom-0 left-0 h-[3px] w-full rounded-full"
-                style={{ backgroundColor: "#5DCAA5" }}
-              />
-            </span>
+            <span className="text-[#C84B24]">before everyone else</span>.
           </h1>
 
-          <p className="mx-auto mt-5 max-w-lg text-lg text-gray-500 sm:text-xl">
-            Wavepilot turns live trending data into your personalized social media game plan — in under 3 minutes.
+          <p
+            className="mx-auto mt-6 max-w-xl text-[18px] leading-[1.5] text-[#7A808C] sm:text-[22px] sm:leading-[1.45]"
+            style={{ fontFamily: "var(--font-body)" }}
+          >
+            Wavepilot turns live trending data into your personalized social media game plan — in under three minutes.
           </p>
 
           {/* Waitlist form */}
           {status === "success" ? (
-            <div className="mx-auto mt-8 max-w-md rounded-xl border border-[#1D9E75]/20 bg-[#E1F5EE] p-6 text-center">
-              <p className="text-lg font-semibold text-[#0F6E56]">{message}</p>
+            <div className="mx-auto mt-10 max-w-md rounded-[12px] border border-[#C84B24]/30 bg-[#FCEEE8] p-6 text-center">
+              <p className="text-[17px] font-medium text-[#802E14]">{message}</p>
               {position !== null && (
-                <p className="mt-2 text-sm text-[#1D9E75]">
+                <p className="mt-2 text-[14px] text-[#C84B24]">
                   You&apos;re #{position} on the list. The first 50 get Creator free for 30 days.
                 </p>
               )}
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="mx-auto mt-8 flex max-w-md flex-col gap-3 sm:flex-row">
+            <form onSubmit={handleSubmit} className="mx-auto mt-10 flex max-w-md flex-col gap-3 sm:flex-row">
               <input
                 type="email"
                 required
                 placeholder="you@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="flex-1 rounded-lg border border-gray-200 px-4 py-3 text-sm text-gray-900 placeholder-gray-400 outline-none transition-all focus:border-[#1D9E75] focus:ring-2 focus:ring-[#1D9E75]/20"
+                className="flex-1 rounded-[6px] border border-[#E4E5EA] bg-white px-4 py-3 text-[15px] text-[#1F1F1F] placeholder-[#9196A0] outline-none transition-all focus:border-[#C84B24] focus:ring-2 focus:ring-[#C84B24]/20"
               />
               <button
                 type="submit"
                 disabled={status === "loading"}
-                className="whitespace-nowrap rounded-lg px-6 py-3 text-sm font-semibold text-white transition-colors disabled:opacity-60"
-                style={{ backgroundColor: "#1D9E75" }}
+                className="whitespace-nowrap rounded-[6px] px-6 py-3 text-[14px] font-medium text-white transition-colors hover:bg-[#A73C18] disabled:opacity-60"
+                style={{ backgroundColor: "#C84B24" }}
               >
-                {status === "loading" ? "Joining..." : "Join waitlist →"}
+                {status === "loading" ? "Joining..." : "Join waitlist"}
               </button>
             </form>
           )}
 
           {status === "error" && (
-            <p className="mt-3 text-sm text-red-600">{message}</p>
+            <p className="mt-3 text-[14px] text-[#B23A2A]">{message}</p>
           )}
 
-          <p className="mt-4 text-xs text-gray-400">
+          <p className="mt-4 text-[13px] text-[#9196A0]">
             Free to join. No credit card required. First 50 users get Creator tier free for 30 days.
           </p>
+
+          {/* Hidden name field — progressive enhancement for waitlist */}
+          <input
+            type="hidden"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
         </div>
       </section>
 
-      {/* Social proof */}
-      <section className="border-t border-gray-100 bg-[#fafaf9] py-12">
+      {/* Social proof / stat band */}
+      <section className="border-y border-[#DDDDDD] bg-white py-14">
         <div className="mx-auto max-w-5xl px-6 text-center">
-          <p className="mb-6 text-xs font-semibold uppercase tracking-widest text-gray-400">
+          <p
+            className="mb-8 text-[12px] font-medium uppercase tracking-[0.12em] text-[#7D7D7D]"
+            style={{ fontFamily: "var(--font-body)" }}
+          >
             Built for creators who want to grow, not guess
           </p>
           <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
@@ -184,8 +183,15 @@ export default function LandingPage() {
               { stat: "AI", label: "Personalized output" },
             ].map((item) => (
               <div key={item.label}>
-                <p className="text-2xl font-bold" style={{ color: "#1D9E75" }}>{item.stat}</p>
-                <p className="mt-1 text-sm text-gray-500">{item.label}</p>
+                <p
+                  className="text-[32px] font-medium text-[#1F1F1F]"
+                  style={{ fontFamily: "var(--font-display)" }}
+                >
+                  {item.stat}
+                </p>
+                <p className="mt-1 text-[13px] font-medium text-[#9196A0]">
+                  {item.label}
+                </p>
               </div>
             ))}
           </div>
@@ -193,46 +199,61 @@ export default function LandingPage() {
       </section>
 
       {/* How it works */}
-      <section id="how-it-works" className="py-20">
+      <section id="how-it-works" className="py-24">
         <div className="mx-auto max-w-5xl px-6">
-          <h2 className="text-center text-3xl font-bold text-gray-900">How it works</h2>
-          <p className="mx-auto mt-3 max-w-lg text-center text-gray-500">
-            Three steps from &quot;what should I post?&quot; to a complete content strategy.
+          <p
+            className="text-center text-[12px] font-medium uppercase tracking-[0.12em] text-[#C84B24]"
+            style={{ fontFamily: "var(--font-body)" }}
+          >
+            How it works
+          </p>
+          <h2
+            className="mt-3 text-center text-[32px] font-medium text-[#1F1F1F] sm:text-[44px]"
+            style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.01em" }}
+          >
+            Three steps to a content plan that actually works.
+          </h2>
+          <p className="mx-auto mt-4 max-w-xl text-center text-[16px] text-[#7A808C]">
+            From &quot;what should I post?&quot; to a complete strategy — no templates, no guesswork.
           </p>
 
-          <div className="mt-12 grid gap-8 md:grid-cols-3">
+          <div className="mt-16 grid gap-6 md:grid-cols-3">
             {[
               {
-                step: "1",
+                step: "01",
                 title: "Tell us your niche",
                 desc: "Pick your niche and the platforms you create for. Wavepilot handles the rest.",
-                icon: "🎯",
               },
               {
-                step: "2",
+                step: "02",
                 title: "We scan what's trending",
                 desc: "Live data from YouTube, TikTok, Reddit, and Twitter — filtered and scored by engagement.",
-                icon: "📡",
               },
               {
-                step: "3",
+                step: "03",
                 title: "Get your game plan",
                 desc: "A personalized content calendar, trend report, or growth strategy — ready to execute.",
-                icon: "🚀",
               },
             ].map((item) => (
               <div
                 key={item.step}
-                className="rounded-xl border border-gray-200 bg-white p-6 transition-shadow hover:shadow-md"
+                className="rounded-[12px] border border-[#DDDDDD] bg-white p-8 transition-colors hover:border-[#C84B24]/40"
               >
-                <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-[#E1F5EE] text-xl">
-                  {item.icon}
-                </div>
-                <p className="mb-1 text-xs font-semibold text-[#1D9E75]" style={{ fontFamily: "monospace" }}>
-                  STEP {item.step}
+                <p
+                  className="text-[13px] font-medium text-[#C84B24]"
+                  style={{ fontFamily: "var(--font-mono)" }}
+                >
+                  {item.step}
                 </p>
-                <h3 className="text-lg font-semibold text-gray-900">{item.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-gray-500">{item.desc}</p>
+                <h3
+                  className="mt-6 text-[22px] font-medium text-[#1F1F1F]"
+                  style={{ fontFamily: "var(--font-display)" }}
+                >
+                  {item.title}
+                </h3>
+                <p className="mt-3 text-[15px] leading-[1.55] text-[#7A808C]">
+                  {item.desc}
+                </p>
               </div>
             ))}
           </div>
@@ -240,14 +261,25 @@ export default function LandingPage() {
       </section>
 
       {/* Output types */}
-      <section className="border-t border-gray-100 bg-[#fafaf9] py-20">
+      <section className="border-y border-[#DDDDDD] bg-white py-24">
         <div className="mx-auto max-w-5xl px-6">
-          <h2 className="text-center text-3xl font-bold text-gray-900">Three plan types. One goal.</h2>
-          <p className="mx-auto mt-3 max-w-lg text-center text-gray-500">
+          <p
+            className="text-center text-[12px] font-medium uppercase tracking-[0.12em] text-[#C84B24]"
+            style={{ fontFamily: "var(--font-body)" }}
+          >
+            Output
+          </p>
+          <h2
+            className="mt-3 text-center text-[32px] font-medium text-[#1F1F1F] sm:text-[44px]"
+            style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.01em" }}
+          >
+            Three plan types. One goal.
+          </h2>
+          <p className="mx-auto mt-4 max-w-xl text-center text-[16px] text-[#7A808C]">
             Choose the output that matches how you work.
           </p>
 
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
+          <div className="mt-16 grid gap-6 md:grid-cols-3">
             {[
               {
                 title: "Weekly Calendar",
@@ -265,12 +297,22 @@ export default function LandingPage() {
                 badge: "Strategic",
               },
             ].map((item) => (
-              <div key={item.title} className="rounded-xl border border-gray-200 bg-white p-6">
-                <span className="inline-block rounded-full bg-[#1D9E75]/10 px-3 py-1 text-xs font-medium text-[#1D9E75]">
+              <div
+                key={item.title}
+                className="rounded-[12px] border border-[#DDDDDD] bg-[#FAFAF9] p-8"
+              >
+                <span className="inline-block rounded-full border border-[#C84B24]/30 bg-[#FCEEE8] px-3 py-1 text-[12px] font-medium text-[#802E14]">
                   {item.badge}
                 </span>
-                <h3 className="mt-3 text-lg font-semibold text-gray-900">{item.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-gray-500">{item.desc}</p>
+                <h3
+                  className="mt-5 text-[22px] font-medium text-[#1F1F1F]"
+                  style={{ fontFamily: "var(--font-display)" }}
+                >
+                  {item.title}
+                </h3>
+                <p className="mt-3 text-[15px] leading-[1.55] text-[#7A808C]">
+                  {item.desc}
+                </p>
               </div>
             ))}
           </div>
@@ -278,14 +320,25 @@ export default function LandingPage() {
       </section>
 
       {/* Pricing preview */}
-      <section id="pricing" className="py-20">
+      <section id="pricing" className="py-24">
         <div className="mx-auto max-w-5xl px-6">
-          <h2 className="text-center text-3xl font-bold text-gray-900">Simple pricing</h2>
-          <p className="mx-auto mt-3 max-w-lg text-center text-gray-500">
+          <p
+            className="text-center text-[12px] font-medium uppercase tracking-[0.12em] text-[#C84B24]"
+            style={{ fontFamily: "var(--font-body)" }}
+          >
+            Pricing
+          </p>
+          <h2
+            className="mt-3 text-center text-[32px] font-medium text-[#1F1F1F] sm:text-[44px]"
+            style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.01em" }}
+          >
+            Simple pricing.
+          </h2>
+          <p className="mx-auto mt-4 max-w-xl text-center text-[16px] text-[#7A808C]">
             Start free. Upgrade when you&apos;re ready to go all-in.
           </p>
 
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
+          <div className="mt-16 grid gap-6 md:grid-cols-3">
             {[
               {
                 name: "Free",
@@ -307,33 +360,50 @@ export default function LandingPage() {
                 name: "Pro",
                 price: "$29",
                 period: "/month",
-                features: ["Unlimited plans", "All platforms", "All output types", "PDF export", "Priority support", "API access (coming)"],
+                features: [
+                  "Unlimited plans",
+                  "All platforms",
+                  "All output types",
+                  "PDF export",
+                  "Priority support",
+                  "API access (coming)",
+                ],
                 cta: "Join waitlist",
                 highlight: false,
               },
             ].map((tier) => (
               <div
                 key={tier.name}
-                className={`rounded-xl border-2 p-6 ${
+                className={`rounded-[12px] border p-8 ${
                   tier.highlight
-                    ? "border-[#1D9E75] bg-[#1D9E75]/5"
-                    : "border-gray-200 bg-white"
+                    ? "border-[#C84B24] bg-[#FCEEE8]"
+                    : "border-[#DDDDDD] bg-white"
                 }`}
               >
                 {tier.highlight && (
-                  <span className="mb-3 inline-block rounded-full bg-[#1D9E75] px-3 py-1 text-xs font-semibold text-white">
+                  <span className="mb-4 inline-block rounded-full bg-[#C84B24] px-3 py-1 text-[12px] font-medium text-white">
                     Most popular
                   </span>
                 )}
-                <h3 className="text-lg font-semibold text-gray-900">{tier.name}</h3>
-                <div className="mt-2">
-                  <span className="text-3xl font-bold text-gray-900">{tier.price}</span>
-                  <span className="text-sm text-gray-500">{tier.period}</span>
+                <h3
+                  className="text-[22px] font-medium text-[#1F1F1F]"
+                  style={{ fontFamily: "var(--font-display)" }}
+                >
+                  {tier.name}
+                </h3>
+                <div className="mt-3 flex items-baseline gap-1">
+                  <span
+                    className="text-[36px] font-medium text-[#1F1F1F]"
+                    style={{ fontFamily: "var(--font-display)" }}
+                  >
+                    {tier.price}
+                  </span>
+                  <span className="text-[14px] text-[#7A808C]">{tier.period}</span>
                 </div>
-                <ul className="mt-4 space-y-2">
+                <ul className="mt-6 space-y-3">
                   {tier.features.map((f) => (
-                    <li key={f} className="flex items-start gap-2 text-sm text-gray-600">
-                      <span style={{ color: "#1D9E75" }}>✓</span>
+                    <li key={f} className="flex items-start gap-3 text-[14px] text-[#1F1F1F]">
+                      <span className="mt-[6px] inline-block h-[5px] w-[5px] shrink-0 rounded-full bg-[#C84B24]" />
                       {f}
                     </li>
                   ))}
@@ -344,10 +414,10 @@ export default function LandingPage() {
                     e.preventDefault();
                     window.scrollTo({ top: 0, behavior: "smooth" });
                   }}
-                  className={`mt-6 block w-full rounded-lg py-2.5 text-center text-sm font-semibold transition-colors ${
+                  className={`mt-8 block w-full rounded-[6px] py-3 text-center text-[14px] font-medium transition-colors ${
                     tier.highlight
-                      ? "bg-[#1D9E75] text-white hover:bg-[#177a5b]"
-                      : "border border-gray-300 text-gray-700 hover:bg-gray-50"
+                      ? "bg-[#C84B24] text-white hover:bg-[#A73C18]"
+                      : "border border-[#DDDDDD] text-[#1F1F1F] hover:bg-[#F4F3F1]"
                   }`}
                 >
                   {tier.cta}
@@ -359,10 +429,15 @@ export default function LandingPage() {
       </section>
 
       {/* Final CTA */}
-      <section className="border-t border-gray-100 bg-[#fafaf9] py-20">
+      <section className="border-t border-[#DDDDDD] bg-white py-24">
         <div className="mx-auto max-w-2xl px-6 text-center">
-          <h2 className="text-3xl font-bold text-gray-900">Stop guessing. Start growing.</h2>
-          <p className="mx-auto mt-3 max-w-md text-gray-500">
+          <h2
+            className="text-[32px] font-medium text-[#1F1F1F] sm:text-[44px]"
+            style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.01em" }}
+          >
+            Stop guessing. Start growing.
+          </h2>
+          <p className="mx-auto mt-4 max-w-md text-[16px] text-[#7A808C]">
             Join the waitlist and be first to get your personalized content game plan.
           </p>
           {status !== "success" && (
@@ -373,15 +448,15 @@ export default function LandingPage() {
                 placeholder="you@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="flex-1 rounded-lg border border-gray-200 px-4 py-3 text-sm text-gray-900 placeholder-gray-400 outline-none transition-all focus:border-[#1D9E75] focus:ring-2 focus:ring-[#1D9E75]/20"
+                className="flex-1 rounded-[6px] border border-[#E4E5EA] bg-white px-4 py-3 text-[15px] text-[#1F1F1F] placeholder-[#9196A0] outline-none transition-all focus:border-[#C84B24] focus:ring-2 focus:ring-[#C84B24]/20"
               />
               <button
                 type="submit"
                 disabled={status === "loading"}
-                className="whitespace-nowrap rounded-lg px-6 py-3 text-sm font-semibold text-white transition-colors disabled:opacity-60"
-                style={{ backgroundColor: "#1D9E75" }}
+                className="whitespace-nowrap rounded-[6px] px-6 py-3 text-[14px] font-medium text-white transition-colors hover:bg-[#A73C18] disabled:opacity-60"
+                style={{ backgroundColor: "#C84B24" }}
               >
-                {status === "loading" ? "Joining..." : "Join waitlist →"}
+                {status === "loading" ? "Joining..." : "Join waitlist"}
               </button>
             </form>
           )}
@@ -389,13 +464,15 @@ export default function LandingPage() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-gray-100 py-8">
-        <div className="mx-auto flex max-w-5xl items-center justify-between px-6">
-          <p className="text-xs text-gray-400">
+      <footer className="border-t border-[#DDDDDD] py-10">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-6">
+          <p className="text-[12px] text-[#9196A0]">
             &copy; {new Date().getFullYear()} Wavepilot. All rights reserved.
           </p>
-          <div className="flex gap-4">
-            <a href="/sign-in" className="text-xs text-gray-400 hover:text-gray-600">Sign In</a>
+          <div className="flex gap-6">
+            <a href="/sign-in" className="text-[12px] text-[#9196A0] hover:text-[#C84B24] transition-colors">
+              Sign in
+            </a>
           </div>
         </div>
       </footer>

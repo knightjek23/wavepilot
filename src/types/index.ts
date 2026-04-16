@@ -63,12 +63,46 @@ export interface GeneratedPlan {
   createdAt: string;
 }
 
+// --- Captions / Hooks ---
+
+export type CaptionVibe = "educational" | "funny" | "bold" | "story" | "hype";
+
+export interface CaptionItem {
+  hook: string;         // first line / scroll-stopper
+  caption: string;      // full caption body (no hashtags)
+  hashtags: string[];   // platform-appropriate tags
+}
+
+export interface CaptionSet {
+  id: string;
+  userId: string;
+  topic: string;
+  platform: Platform;
+  vibe: CaptionVibe;
+  count: number;
+  items: CaptionItem[];
+  promptTokens: number;
+  createdAt: string;
+}
+
+export interface GenerateCaptionsRequest {
+  topic: string;
+  platform: Platform;
+  vibe: CaptionVibe;
+  count: number;
+}
+
 // --- Usage & Billing ---
+
+export type UsageEventType = "plan" | "caption";
 
 export interface UsageEvent {
   id: string;
   userId: string;
   planId: string | null;
+  captionSetId: string | null;
+  eventType: UsageEventType;
+  success: boolean;
   billingPeriod: string; // e.g. "2026-04"
   createdAt: string;
 }
@@ -109,3 +143,24 @@ export const PLAN_PLATFORM_LIMITS: Record<PlanTier, number> = {
   creator: Infinity,
   pro: Infinity,
 };
+
+// --- Caption quota (monthly generations, not individual captions) ---
+export const CAPTION_LIMITS: Record<PlanTier, number> = {
+  free: 5,
+  creator: 100,
+  pro: Infinity,
+};
+
+export const CAPTION_VIBE_OPTIONS: {
+  value: CaptionVibe;
+  label: string;
+  description: string;
+}[] = [
+  { value: "educational", label: "Educational", description: "Inform, teach, share a tip" },
+  { value: "funny", label: "Funny", description: "Playful, witty, relatable" },
+  { value: "bold", label: "Bold", description: "Strong opinion, hot take" },
+  { value: "story", label: "Story", description: "Narrative-driven, personal" },
+  { value: "hype", label: "Hype", description: "High energy, launch-style" },
+];
+
+export const CAPTION_COUNT_OPTIONS = [5, 10] as const;
